@@ -96,13 +96,13 @@ open class KSTokenView: UIView {
    //__________________________________________________________________________________
    //
    fileprivate var _tokenField: KSTokenField!
-   fileprivate var _searchTableView: UITableView = UITableView(frame: .zero, style: UITableViewStyle.plain)
+   fileprivate var _searchTableView: UITableView = UITableView(frame: .zero, style: UITableView.Style.plain)
    fileprivate var _resultArray = [AnyObject]()
    fileprivate var _showingSearchResult = false
-   fileprivate var _indicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+   fileprivate var _indicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorView.Style.gray)
    fileprivate var _searchResultHeight: CGFloat = 200.0
    fileprivate var _lastSearchString: String = ""
-   fileprivate var _intrinsicContentHeight: CGFloat = UIViewNoIntrinsicMetric
+   fileprivate var _intrinsicContentHeight: CGFloat = UIView.noIntrinsicMetric
    
    //MARK: - Public Properties
    //__________________________________________________________________________________
@@ -392,7 +392,7 @@ open class KSTokenView: UIView {
       _tokenField.isEnabled = true
       _tokenField.tokenFieldDelegate = self
       _tokenField.placeholder = ""
-      _tokenField.autoresizingMask = [.flexibleWidth]
+      _tokenField.autoresizingMask = [UIView.AutoresizingMask.flexibleWidth]
       _updateTokenField()
       addSubview(_tokenField)
       
@@ -419,7 +419,7 @@ open class KSTokenView: UIView {
    }
    
     override open var intrinsicContentSize : CGSize {
-        return CGSize(width: UIViewNoIntrinsicMetric, height: _intrinsicContentHeight)
+        return CGSize(width: UIView.noIntrinsicMetric, height: _intrinsicContentHeight)
     }
     
     //MARK: - Public Methods
@@ -869,7 +869,7 @@ extension KSTokenView : UITextFieldDelegate {
       var olderTextTrimmed = olderText!
     
       // remove the empty text marker from the beginning of the string
-      if (olderText?.characters.first == KSTextEmpty.characters.first) {
+      if (olderText?.first == KSTextEmpty.first) {
         olderTextTrimmed = String(olderText![olderText!.index(olderText!.startIndex, offsetBy: 1)..<olderText!.endIndex])
       }
     
@@ -888,13 +888,13 @@ extension KSTokenView : UITextFieldDelegate {
             return false
          }
          searchString = (olderText! as NSString).replacingCharacters(in: range, with: string)
-         if (searchString.characters.first == KSTextEmpty.characters.first) {
+         if (searchString.first == KSTextEmpty.first) {
             searchString = String(searchString[1...])
          }
       }
     
       // Allow all other characters
-      if (searchString.characters.count >= minimumCharactersToSearch && searchString != "\n") {
+      if (searchString.count >= minimumCharactersToSearch && searchString != "\n") {
          _lastSearchString = searchString
          _startSearchWithString(_lastSearchString)
       } else {
@@ -929,7 +929,7 @@ extension KSTokenView : UITableViewDelegate {
          
       } else if (!shouldDisplayAlreadyTokenized) {
          _resultArray.remove(at: (indexPath as NSIndexPath).row)
-         tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.left)
+         tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
       }
    }
 }
@@ -953,12 +953,12 @@ extension KSTokenView : UITableViewDataSource {
       let cellIdentifier = "KSSearchTableCell"
       cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as UITableViewCell?
       if (cell == nil) {
-         cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: cellIdentifier)
+         cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: cellIdentifier)
       }
       
       let title = delegate?.tokenView(self, displayTitleForObject: _resultArray[(indexPath as NSIndexPath).row])
       cell!.textLabel!.text = (title != nil) ? title : "No Title"
-      cell!.selectionStyle = UITableViewCellSelectionStyle.none
+      cell!.selectionStyle = UITableViewCell.SelectionStyle.none
       return cell!
    }
 }

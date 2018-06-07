@@ -161,7 +161,7 @@ open class KSTokenField: UITextField {
       text = ""
       autocorrectionType = UITextAutocorrectionType.no
       autocapitalizationType = UITextAutocapitalizationType.none
-      contentVerticalAlignment = UIControlContentVerticalAlignment.top
+      contentVerticalAlignment = UIControl.ContentVerticalAlignment.top
       returnKeyType = UIReturnKeyType.done
       text = KSTextEmpty
       backgroundColor = UIColor.white
@@ -170,14 +170,14 @@ open class KSTokenField: UITextField {
       
       _setScrollRect()
       _scrollView.backgroundColor = UIColor.clear
-      _scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+      _scrollView.autoresizingMask = [UIView.AutoresizingMask.flexibleWidth, UIView.AutoresizingMask.flexibleHeight]
       let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIResponder.becomeFirstResponder))
       gestureRecognizer.cancelsTouchesInView = false
       _scrollView.addGestureRecognizer(gestureRecognizer)
       _scrollView.delegate = self
       addSubview(_scrollView)
       
-      addTarget(self, action: #selector(KSTokenField.tokenFieldTextDidChange(_:)), for: UIControlEvents.editingChanged)
+      addTarget(self, action: #selector(KSTokenField.tokenFieldTextDidChange(_:)), for: UIControl.Event.editingChanged)
    }
    
    fileprivate func _setScrollRect() {
@@ -186,12 +186,12 @@ open class KSTokenField: UITextField {
     let height = frame.height
     
     _scrollView.frame = CGRect(x: _leftViewRect().width + buffer, y: 0, width: width, height: height)
-//    _scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
-//    _scrollView.contentSize = CGSize(width: width, height: height)
    }
    
    override open func draw(_ rect: CGRect) {
-      _selfFrame = rect
+      if (!_setupCompleted) {
+         _selfFrame = rect
+      }
       _setupCompleted = true
       _updateText()
       
@@ -236,13 +236,13 @@ open class KSTokenField: UITextField {
    - returns: KSToken object
    */
    func addToken(_ token: KSToken) -> KSToken? {
-      if (token.title.characters.count == 0) {
+      if (token.title.count == 0) {
          token.title = "Untitled"
       }
       
       if (!tokens.contains(token)) {
-         token.addTarget(self, action: #selector(KSTokenField.tokenTouchDown(_:)), for: .touchDown)
-         token.addTarget(self, action: #selector(KSTokenField.tokenTouchUpInside(_:)), for: .touchUpInside)
+         token.addTarget(self, action: #selector(KSTokenField.tokenTouchDown(_:)), for: UIControl.Event.touchDown)
+         token.addTarget(self, action: #selector(KSTokenField.tokenTouchUpInside(_:)), for: UIControl.Event.touchUpInside)
          tokens.append(token)
          _insertToken(token)
       }
@@ -252,7 +252,7 @@ open class KSTokenField: UITextField {
    
    fileprivate func _insertToken(_ token: KSToken, shouldLayout: Bool = true) {
       _scrollView.addSubview(token)
-      _scrollView.bringSubview(toFront: token)
+      _scrollView.bringSubviewToFront(token)
       token.setNeedsDisplay()
       if shouldLayout == true {
          updateLayout()
@@ -584,8 +584,8 @@ open class KSTokenField: UITextField {
                title += "\(token.title)\(_separatorText!)"
             }
             
-            if (title.characters.count > 0) {
-               title = title.substring(with: title.characters.index(title.startIndex, offsetBy: 0)..<title.characters.index(title.endIndex, offsetBy: -_separatorText!.characters.count))
+            if (title.count > 0) {                
+                title = String(title[..<title.index(title.endIndex, offsetBy: -_separatorText!.count)])
             }
             
             let width = KSUtils.widthOfString(title, font: font!)
@@ -656,14 +656,14 @@ open class KSTokenField: UITextField {
       tokenFieldDelegate?.tokenFieldDidSelectToken?(token)
    }
    
-    @objc func tokenTouchDown(_ token: KSToken) {
+   @objc func tokenTouchDown(_ token: KSToken) {
       if (selectedToken != nil) {
          selectedToken?.isSelected = false
          selectedToken = nil
       }
    }
    
-    @objc func tokenTouchUpInside(_ token: KSToken) {
+   @objc func tokenTouchUpInside(_ token: KSToken) {
       selectToken(token)
    }
    
@@ -674,7 +674,7 @@ open class KSTokenField: UITextField {
       return super.beginTracking(touch, with: event)
    }
    
-    @objc func tokenFieldTextDidChange(_ textField: UITextField) {
+   @objc func tokenFieldTextDidChange(_ textField: UITextField) {
       _updatePlaceHolderVisibility()
    }
    
@@ -721,7 +721,12 @@ extension KSTokenField : UIScrollViewDelegate {
    public func scrollViewDidScroll(_ aScrollView: UIScrollView) {
     if (_state == .opened) {
         text = KSTextEmpty
-    }    
+    }
+    if (_direction == .horizontal) {
+        aScrollView.contentOffset.y = 0
+    } else {
+        aScrollView.contentOffset.x = 0
+    }
       updateCaretVisiblity(aScrollView)
    }
    

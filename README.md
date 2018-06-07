@@ -20,21 +20,23 @@ Click [here](https://appetize.io/app/0kzy34tyg761punebrcc1x556w) for Live Previe
 
 - iOS 9 and above.
 - Xcode 8.1 and above
-- Swift 3 and above **(For Swift 2.x use branch develop/Swift2.3)**
+- Swift 4 and above
+**(For Swift 2.x use branch develop/swift2.3)**
+**(For Swift 3.x use branch develop/swift3)**
 
 
 ## Adding KSTokenView to your project
 
-### METHOD 1: (CocoaPods only for iOS 8.0 and above)
+### METHOD 1: (CocoaPods only for iOS 9.0 and above)
 Add a pod entry for `KSTokenView` to your Podfile
 
 ```ruby
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '8.0'
+platform :ios, '9.0'
 use_frameworks!
 
 target '<Your Target Name>' do
-    pod 'KSTokenView', '~> 3.1'
+    pod 'KSTokenView', '~> 4.0'
 end
 ``` 
 

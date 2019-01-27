@@ -99,7 +99,7 @@ open class KSTokenView: UIView {
    fileprivate var _searchTableView: UITableView = UITableView(frame: .zero, style: UITableView.Style.plain)
    fileprivate var _resultArray = [AnyObject]()
    fileprivate var _showingSearchResult = false
-   fileprivate var _indicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorView.Style.gray)
+    fileprivate var _indicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.gray)
    fileprivate var _searchResultHeight: CGFloat = 200.0
    fileprivate var _lastSearchString: String = ""
    fileprivate var _intrinsicContentHeight: CGFloat = UIView.noIntrinsicMetric

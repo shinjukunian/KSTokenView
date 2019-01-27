@@ -311,7 +311,7 @@ open class KSTokenField: UITextField {
       }
       token.removeFromSuperview()
       
-      let index = tokens.index(of: token)
+      let index = tokens.firstIndex(of: token)
       if (index != nil) {
          tokens.remove(at: index!)
       }

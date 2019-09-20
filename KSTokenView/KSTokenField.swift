@@ -112,6 +112,7 @@ open class KSTokenField: UITextField {
             _bufferX = tokenView!.bufferX
             _direction = tokenView!.direction
             _font = tokenView!.font
+            self.textColor = tokenView?.textColor ?? .black
             if (_font != nil) {
                font = _font
             }

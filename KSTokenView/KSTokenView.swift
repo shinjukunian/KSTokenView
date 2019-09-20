@@ -244,6 +244,13 @@ open class KSTokenView: UIView {
          }
       }
    }
+    @objc open var textColor: UIColor = UIColor.black {
+       didSet {
+          if (oldValue != textColor) {
+             _updateTokenField()
+          }
+       }
+    }
    
    /// default is 50.0. Caret moves to new line if input width is less than this value
    @objc open var minWidthForInput: CGFloat = 50.0 {

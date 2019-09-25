@@ -161,7 +161,7 @@ open class KSTokenField: UITextField {
    fileprivate func _setupTokenField() {
       text = ""
       autocorrectionType = UITextAutocorrectionType.no
-      autocapitalizationType = UITextAutocapitalizationType.none
+      autocapitalizationType = UITextAutocapitalizationType.words
       contentVerticalAlignment = UIControl.ContentVerticalAlignment.top
       returnKeyType = UIReturnKeyType.done
       text = KSTextEmpty
@@ -585,7 +585,7 @@ open class KSTokenField: UITextField {
                title += "\(token.title)\(_separatorText!)"
             }
             
-            if (title.count > 0) {                
+            if (title.count > 0) {
                 title = String(title[..<title.index(title.endIndex, offsetBy: -_separatorText!.count)])
             }
             

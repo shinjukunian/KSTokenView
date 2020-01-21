@@ -6,7 +6,7 @@ let package = Package(
     name: "KSTokenView",
     
     products: [
-        .library(name: "CKBezierPath", targets: ["CKBezierPath"]),
+        .library(name: "KSTokenView", targets: ["KSTokenView"]),
     ],
     dependencies: [],
     targets: [

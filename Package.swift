@@ -6,10 +6,10 @@ let package = Package(
     name: "KSTokenView",
     
     products: [
-        .library(name: "CKBezierPath", targets: ["CKBezierPath"]),
+        .library(name: "KSTokenView", targets: ["KSTokenView"]),
     ],
     dependencies: [],
     targets: [
-        .target(name: "CKBezierPath", dependencies: [], path: "KSTokenView", exclude: [], sources: nil, publicHeadersPath: nil, cSettings: nil, cxxSettings: nil, swiftSettings: nil, linkerSettings: nil),
+        .target(name: "KSTokenView", dependencies: [], path: "KSTokenView", exclude: [], sources: nil, publicHeadersPath: nil, cSettings: nil, cxxSettings: nil, swiftSettings: nil, linkerSettings: nil),
     ]
 )
